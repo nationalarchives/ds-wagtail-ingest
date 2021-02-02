@@ -162,25 +162,20 @@ class BlogPage(Page):
     source_url = models.URLField()
     body = models.TextField()
     date_published = models.DateTimeField()
-    file = models.ForeignKey(
-        get_document_model_string(),
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    content_tags = ClusterTaggableManager(through=TaggedCategoryVideoItem, blank=True)
-    theme_tags = ClusterTaggableManager(through=TaggedThemeVideoItem, blank=True)
+    content_tags = ClusterTaggableManager(through=TaggedCategoryBlogPageItem, blank=True)
+    theme_tags = ClusterTaggableManager(through=TaggedThemeBlogPageItem, blank=True)
 
-    panels = [
+    content_panels = [
         FieldPanel("source_url"),
         FieldPanel("title"),
         FieldPanel("body"),
         FieldPanel("date_published"),
         FieldPanel("content_tags", heading="Content tags"),
         FieldPanel("theme_tags", heading="Theme tags"),
-        DocumentChooserPanel("file"),
     ]
 
     def __str__(self):
         return self.title
+
+class HubPage(Page):
+    ...
