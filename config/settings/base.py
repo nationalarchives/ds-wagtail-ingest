@@ -24,10 +24,13 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    'tna.home',
-    'tna.search',
+    'tna.blog',
     'tna.collections',
+    'tna.home',
     'tna.lessons',
+    'tna.media',
+    'tna.research',
+    'tna.search',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
