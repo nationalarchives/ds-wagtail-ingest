@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'tna.home',
     'tna.search',
     'tna.collections',
+    'tna.lessons',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
