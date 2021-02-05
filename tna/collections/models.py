@@ -5,13 +5,14 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from taggit.models import TagBase, ItemBase
-from taggit.managers import TaggableManager
 
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.documents import get_document_model_string
-from wagtail.snippets.models import register_snippet
+
+from .blocks import ContentHubBodyBlock
 
 
 class ThemeTag(TagBase):
@@ -33,7 +34,7 @@ class TaggedThemeAudioItem(ItemBase):
         ThemeTag, related_name="tagged_audio_items", on_delete=models.CASCADE
     )
     content_object = ParentalKey(
-        "collections.Audio",
+        "collections.AudioPage",
         on_delete=models.CASCADE,
         related_name="tagged_theme_items",
     )
@@ -44,16 +45,18 @@ class TaggedCategoryAudioItem(ItemBase):
         CategoryTag, related_name="tagged_audio_items", on_delete=models.CASCADE
     )
     content_object = ParentalKey(
-        "collections.Audio",
+        "collections.AudioPage",
         on_delete=models.CASCADE,
         related_name="tagged_content_items",
     )
 
 
-@register_snippet
-class Audio(ClusterableModel):
+class AudioIndexPage(Page):
+    ...
+
+
+class AudioPage(Page):
     source_url = models.URLField()
-    title = models.CharField(max_length=255)
     body = models.TextField()
     date_published = models.DateTimeField()
     file = models.ForeignKey(
@@ -63,10 +66,10 @@ class Audio(ClusterableModel):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    content_tags = TaggableManager(through=TaggedCategoryAudioItem, blank=True)
-    theme_tags = TaggableManager(through=TaggedThemeAudioItem, blank=True)
+    content_tags = ClusterTaggableManager(through=TaggedCategoryAudioItem, blank=True)
+    theme_tags = ClusterTaggableManager(through=TaggedThemeAudioItem, blank=True)
 
-    panels = [
+    content_panels = [
         FieldPanel("source_url"),
         FieldPanel("title"),
         FieldPanel("body"),
@@ -85,7 +88,7 @@ class TaggedThemeVideoItem(ItemBase):
         ThemeTag, related_name="tagged_video_items", on_delete=models.CASCADE
     )
     content_object = ParentalKey(
-        "collections.Video",
+        "collections.VideoPage",
         on_delete=models.CASCADE,
         related_name="tagged_video_items",
     )
@@ -96,16 +99,18 @@ class TaggedCategoryVideoItem(ItemBase):
         CategoryTag, related_name="tagged_video_items", on_delete=models.CASCADE
     )
     content_object = ParentalKey(
-        "collections.Video",
+        "collections.VideoPage",
         on_delete=models.CASCADE,
         related_name="tagged_category_items",
     )
 
 
-@register_snippet
-class Video(ClusterableModel):
+class VideoIndexPage(Page):
+    ...
+
+
+class VideoPage(Page):
     source_url = models.URLField()
-    title = models.CharField(max_length=255)
     body = models.TextField()
     date_published = models.DateTimeField()
     file = models.ForeignKey(
@@ -115,10 +120,10 @@ class Video(ClusterableModel):
         on_delete=models.SET_NULL,
         related_name="+",
     )
-    content_tags = TaggableManager(through=TaggedCategoryVideoItem, blank=True)
-    theme_tags = TaggableManager(through=TaggedThemeVideoItem, blank=True)
+    content_tags = ClusterTaggableManager(through=TaggedCategoryVideoItem, blank=True)
+    theme_tags = ClusterTaggableManager(through=TaggedThemeVideoItem, blank=True)
 
-    panels = [
+    content_panels = [
         FieldPanel("source_url"),
         FieldPanel("title"),
         FieldPanel("body"),
@@ -162,7 +167,9 @@ class BlogPage(Page):
     source_url = models.URLField()
     body = models.TextField()
     date_published = models.DateTimeField()
-    content_tags = ClusterTaggableManager(through=TaggedCategoryBlogPageItem, blank=True)
+    content_tags = ClusterTaggableManager(
+        through=TaggedCategoryBlogPageItem, blank=True
+    )
     theme_tags = ClusterTaggableManager(through=TaggedThemeBlogPageItem, blank=True)
 
     content_panels = [
@@ -177,5 +184,45 @@ class BlogPage(Page):
     def __str__(self):
         return self.title
 
-class HubPage(Page):
-    ...
+
+class TaggedThemeContentHubPageItem(ItemBase):
+    tag = models.ForeignKey(
+        ThemeTag, related_name="tagged_content_hub_page_items", on_delete=models.CASCADE
+    )
+    content_object = ParentalKey(
+        "collections.ContentHubPage",
+        on_delete=models.CASCADE,
+        related_name="tagged_content_hub_page_items",
+    )
+
+
+class TaggedCategoryContentHubPageItem(ItemBase):
+    tag = models.ForeignKey(
+        CategoryTag,
+        related_name="tagged_content_hub_page_items",
+        on_delete=models.CASCADE,
+    )
+    content_object = ParentalKey(
+        "collections.ContentHubPage",
+        on_delete=models.CASCADE,
+        related_name="tagged_category_items",
+    )
+
+
+class ContentHubPage(Page):
+    sub_title = models.CharField(max_length=255)
+    body = StreamField(ContentHubBodyBlock())
+    content_tags = ClusterTaggableManager(
+        through=TaggedCategoryContentHubPageItem, blank=True
+    )
+    theme_tags = ClusterTaggableManager(
+        through=TaggedThemeContentHubPageItem, blank=True
+    )
+
+    content_panels = [
+        FieldPanel("title"),
+        FieldPanel("sub_title"),
+        StreamFieldPanel("body"),
+        FieldPanel("content_tags", heading="Content tags"),
+        FieldPanel("theme_tags", heading="Theme tags"),
+    ]
