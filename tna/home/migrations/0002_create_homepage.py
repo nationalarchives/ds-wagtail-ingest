@@ -53,6 +53,7 @@ class Migration(migrations.Migration):
         ('home', '0001_initial'),
     ]
 
+
     run_before = [('wagtailcore', '0053_locale_model')]
 
     operations = [
