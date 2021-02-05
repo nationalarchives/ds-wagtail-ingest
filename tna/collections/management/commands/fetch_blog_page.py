@@ -47,7 +47,7 @@ class Command(BaseCommand):
         try:
             blog_index_page = BlogIndexPage.objects.get()
         except BlogIndexPage.DoesNotExist:
-            blog_index_page = BlogIndexPage(title="Blog Index Page")
+            blog_index_page = BlogIndexPage(title="Blogs")
             home_page.add_child(instance=blog_index_page)
 
         for url in fetch_audo_page_urls():
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 
             theme_tag_names = [a.text for a in document.find(".tags a")]
             theme_tags = [
-                ThemeTag.objects.get_or_create(name=tag_name)[0]
+                ThemeTag.objects.get_or_create(name=tag_name.title())[0]
                 for tag_name in theme_tag_names
             ]
 
@@ -79,7 +79,7 @@ class Command(BaseCommand):
                 for t in document.find(".entry-meta").text().split("|")[2].split(",")
             ]
             category_tags = [
-                CategoryTag.objects.get_or_create(name=tag_name)[0]
+                CategoryTag.objects.get_or_create(name=tag_name.title())[0]
                 for tag_name in category_tag_names
             ]
 

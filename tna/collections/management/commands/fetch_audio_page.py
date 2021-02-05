@@ -8,8 +8,10 @@ from pyquery import PyQuery as pq
 
 from django.core.management.base import BaseCommand
 
+from ....home.models import HomePage
 from ...models import (
-    Audio,
+    AudioPage,
+    AudioIndexPage,
     CategoryTag,
     ThemeTag,
     TaggedCategoryAudioItem,
@@ -36,7 +38,17 @@ def fetch_audo_page_urls():
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
+        home_page = HomePage.objects.get()
+
+        try:
+            audio_index_page = AudioIndexPage.objects.get()
+        except AudioIndexPage.DoesNotExist:
+            audio_index_page = AudioIndexPage(title="Audio Pages")
+            home_page.add_child(instance=audio_index_page)
+
         for url in fetch_audo_page_urls():
+            print(f"fetching {url}")
+
             page = requests.get(url).content
             document = pq(page)
 
@@ -48,7 +60,7 @@ class Command(BaseCommand):
 
             theme_tag_names = [a.text for a in document.find(".tags a")]
             theme_tags = [
-                ThemeTag.objects.get_or_create(name=tag_name)[0]
+                ThemeTag.objects.get_or_create(name=tag_name.title())[0]
                 for tag_name in theme_tag_names
             ]
 
@@ -57,21 +69,25 @@ class Command(BaseCommand):
                 for t in document.find(".entry-meta").text().split("|")[2].split(",")
             ]
             category_tags = [
-                CategoryTag.objects.get_or_create(name=tag_name)[0]
+                CategoryTag.objects.get_or_create(name=tag_name.title())[0]
                 for tag_name in category_tag_names
             ]
 
-            audio, _ = Audio.objects.update_or_create(
-                source_url=url,
-                defaults={
-                    "title": document.find(".entry-header").text(),
-                    "body": document.find(".entry-content").text(),
-                    "date_published": published_date,
-                },
-            )
+            try:
+                audio_page = AudioPage.objects.get(source_url=url)
+            except AudioPage.DoesNotExist:
+                audio_page = AudioPage()
+
+            audio_page.source_url=url
+            audio_page.title=document.find(".entry-header").text()
+            audio_page.body=document.find(".entry-content").text()
+            audio_page.date_published=published_date
+
+            if not audio_page.id:
+                audio_index_page.add_child(instance=audio_page)
 
             for tag in theme_tags:
-                TaggedThemeAudioItem.objects.create(tag=tag, content_object=audio)
+                TaggedThemeAudioItem.objects.create(tag=tag, content_object=audio_page)
 
             for tag in category_tags:
-                TaggedCategoryAudioItem.objects.create(tag=tag, content_object=audio)
+                TaggedCategoryAudioItem.objects.create(tag=tag, content_object=audio_page)
