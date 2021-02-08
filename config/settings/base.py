@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'tna.blog',
     'tna.collections',
+    'tna.exhibitions',
     'tna.home',
     'tna.lessons',
     'tna.media',
