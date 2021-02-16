@@ -55,5 +55,8 @@ class BlogPage(Page):
         FieldPanel("theme_tags", heading="Theme tags"),
     ]
 
+    parent_page_types = ["blog.BlogIndexPage"]
+    subpage_types = []
+
     def __str__(self):
         return self.title

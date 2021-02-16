@@ -29,3 +29,5 @@ class ExhibitionPage(Page):
         FieldPanel("source_url"),
         FieldPanel("description"),
     ]
+
+    parent_page_types = ["exhibitions.ExhibitionPage"]

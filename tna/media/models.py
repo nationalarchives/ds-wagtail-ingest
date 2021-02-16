@@ -68,6 +68,9 @@ class AudioPage(Page):
         DocumentChooserPanel("file"),
     ]
 
+    parent_page_types = ["media.AudioIndexPage"]
+    subpage_types = []
+
     def __str__(self):
         return self.title
 
@@ -121,6 +124,9 @@ class VideoPage(Page):
         FieldPanel("theme_tags", heading="Theme tags"),
         DocumentChooserPanel("file"),
     ]
+
+    parent_page_types = ["media.VideoIndexPage"]
+    subpage_types = []
 
     def __str__(self):
         return self.title

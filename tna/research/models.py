@@ -49,3 +49,6 @@ class ResearchGuidePage(Page):
         FieldPanel("source_url"),
         FieldPanel("research_guide_tags"),
     ]
+
+    parent_page_types = ["research.ResearchGuideIndexPage"]
+    subpage_types = []
