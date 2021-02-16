@@ -7,7 +7,7 @@ from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, ItemBase
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 
 
@@ -80,7 +80,7 @@ class LearningResourceIndexPage(Page):
 class LearningResourcePage(Page):
     source_url = models.URLField()
     sub_title = models.CharField(max_length=255)
-    body = models.TextField()
+    body = RichTextField()
     suitable_for_tags = ClusterTaggableManager(
         through=TaggedSuitableForLearningResourceTag, blank=True
     )

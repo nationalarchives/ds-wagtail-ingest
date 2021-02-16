@@ -7,7 +7,7 @@ from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, ItemBase
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.documents import get_document_model_string
@@ -41,12 +41,14 @@ class TaggedCategoryAudioItem(ItemBase):
 
 
 class AudioIndexPage(Page):
-    ...
+    max_count = 1
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["media.AudioPage"]
 
 
 class AudioPage(Page):
     source_url = models.URLField()
-    body = models.TextField()
+    body = RichTextField()
     date_published = models.DateTimeField()
     file = models.ForeignKey(
         get_document_model_string(),
@@ -98,12 +100,14 @@ class TaggedCategoryVideoItem(ItemBase):
 
 
 class VideoIndexPage(Page):
-    ...
+    max_count = 1
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["media.VideoPage"]
 
 
 class VideoPage(Page):
     source_url = models.URLField()
-    body = models.TextField()
+    body = RichTextField()
     date_published = models.DateTimeField()
     file = models.ForeignKey(
         get_document_model_string(),

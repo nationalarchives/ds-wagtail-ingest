@@ -7,6 +7,8 @@ from taggit.models import ItemBase
 
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
+
 
 from ..collections.models import ThemeTag, CategoryTag
 
@@ -34,12 +36,14 @@ class TaggedCategoryBlogPageItem(ItemBase):
 
 
 class BlogIndexPage(Page):
-    ...
+    max_count = 1
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["blog.BlogPage"]
 
 
 class BlogPage(Page):
     source_url = models.URLField()
-    body = models.TextField()
+    body = RichTextField()
     date_published = models.DateTimeField()
     content_tags = ClusterTaggableManager(
         through=TaggedCategoryBlogPageItem, blank=True
