@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<dl>
+  <dt>Title</dt>
+  <dd>{{ page.title }}</dd>
+  <dt>Source URL</dt>
+  <dd><a href="{{ page.source_url }}">{{ page.source_url }}</a></dd>
+  <dd>{{ page.date_published }}</dd>
+  <dt>Research Guide Tags</dt>
+  <dd>
+    <ul>
+      {% for tag in page.research_guide_tags.all %}
+      <li>{{ tag.name }}</li>
+      {% endfor %}
+    </ul>
+  </dd>
+</dl>
+{% endblock %}

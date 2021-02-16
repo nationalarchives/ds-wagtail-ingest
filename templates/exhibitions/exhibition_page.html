@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<dl>
+  <dt>Title</dt>
+  <dd>{{ page.title }}</dd>
+  <dt>Source URL</dt>
+  <dd><a href="{{ page.source_url }}">{{ page.source_url }}</a></dd>
+  <dt>Description</dt>
+  <dd>{{ page.description }}</dd>
+</dl>
+{% endblock %}
