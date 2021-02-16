@@ -45,6 +45,8 @@ class Command(BaseCommand):
 
         for page_data in fetch_page_data():
 
+            print(f"fetching {page_data['url']}")
+
             try:
                 exhibition_page = ExhibitionPage.objects.get(
                     source_url=page_data["url"]

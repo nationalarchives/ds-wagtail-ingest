@@ -10,7 +10,6 @@ from ...models import (
     ResearchGuidePage,
     ResearchGuideIndexPage,
     ResearchGuideTag,
-    TaggedResearchGuide, 
 )
 
 DATEIME_FORMAT = "%A %d %B %Y"
@@ -30,7 +29,7 @@ def fetch_page_data():
         yield {
             'title':a.text, 
             'url':a.attrib["href"], 
-            'tags': tags
+            'tags': [a.text.strip().title() for a in pq(a).siblings('span.tag a')]
         }
 
 
@@ -47,20 +46,22 @@ class Command(BaseCommand):
 
         for page_data in fetch_page_data():
 
+            print(f"Fetching {page_data['url']}")
+
             try:
-                research_guide = ResearchGuidePage.objects.get(source_url=page_data['url'])
+                page = ResearchGuidePage.objects.get(source_url=page_data['url'])
             except ResearchGuidePage.DoesNotExist:
-                research_guide = ResearchGuidePage(source_url=page_data['url'])
+                page = ResearchGuidePage(source_url=page_data['url'])
 
-            research_guide.title = page_data['title']
+            page.title = page_data['title']
 
-            if not research_guide.id:
-                research_guide_index_page.add_child(instance=research_guide)
+            for name in page_data['tags']:
+                if not page.research_guide_tags.filter(name=name).exists():
+                    tag, _ = ResearchGuideTag.objects.get_or_create(name=name)
+                    page.research_guide_tags.add(tag)
 
-            research_guide_tags = [
-                ResearchGuideTag.objects.get_or_create(name=tag_name.title())[0]
-                for tag_href, tag_name in page_data['tags'].items()
-            ]
+            if not page.id:
+                research_guide_index_page.add_child(instance=page)
+            else:
+                page.save()
 
-            for tag in research_guide_tags:
-                TaggedResearchGuide.objects.create(tag=tag, content_object=research_guide)

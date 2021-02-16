@@ -39,6 +39,7 @@ TAG_HEADINGS = [
     "Curriculum topics:",
 ]
 
+
 def fetch_page_data(url):
     page = requests.get(url).content
     document = pq(page)
@@ -72,16 +73,11 @@ def fetch_page_data(url):
         except AttributeError:
             continue
 
-        if (
-            title is None
-            or title.text.strip() != "Suggested inquiry questions:"
-        ):
+        if title is None or title.text.strip() != "Suggested inquiry questions:":
             continue
 
         suggested_inquiry_question = (
-            meta_data.text_content()
-            .replace("Suggested inquiry questions:", "")
-            .strip()
+            meta_data.text_content().replace("Suggested inquiry questions:", "").strip()
         )
 
     potential_activities = ""
@@ -97,18 +93,16 @@ def fetch_page_data(url):
             continue
 
         potential_activities = (
-            meta_data.text_content()
-            .replace("Potential activities:", "")
-            .strip()
+            meta_data.text_content().replace("Potential activities:", "").strip()
         )
 
     return {
-        'title' : document.find("h1").text(),
-        'sub_title' : document.find("h2").text(),
-        'body' : document.find(".article").text(),
-        'tags': tags,
-        'suggested_inquiry_question': suggested_inquiry_question,
-        'potential_activities': potential_activities,
+        "title": document.find("h1").text(),
+        "sub_title": document.find("h2").text(),
+        "body": document.find(".article").html(),
+        "tags": tags,
+        "suggested_inquiry_question": suggested_inquiry_question,
+        "potential_activities": potential_activities,
     }
 
 
@@ -129,8 +123,8 @@ class Command(BaseCommand):
 
             page_data = fetch_page_data(url)
 
-            if not page_data['body']:
-                print(f'Failed to parse {url}')
+            if not page_data["body"]:
+                print(f"Failed to parse {url}")
                 continue
 
             try:
@@ -140,40 +134,47 @@ class Command(BaseCommand):
             except LearningResourcePage.DoesNotExist:
                 learning_resource_page = LearningResourcePage(source_url=url)
 
-            learning_resource_page.title = page_data['title']
-            learning_resource_page.sub_title = page_data['sub_title']
-            learning_resource_page.body = page_data['body']
-            learning_resource_page.suggested_inquiry_question = page_data['suggested_inquiry_question']
-            learning_resource_page.potential_activities = page_data['potential_activities']
+            learning_resource_page.title = page_data["title"]
+            learning_resource_page.sub_title = page_data["sub_title"]
+            learning_resource_page.body = page_data["body"]
+            learning_resource_page.suggested_inquiry_question = page_data[
+                "suggested_inquiry_question"
+            ]
+            learning_resource_page.potential_activities = page_data[
+                "potential_activities"
+            ]
+
+            try:
+                for tag_name in page_data["tags"]["Suitable for:"]:
+                    if not learning_resource_page.suitable_for_tags.filter(
+                        name=tag_name
+                    ).exists():
+                        tag, _ = SuitableForTag.objects.get_or_create(name=tag_name)
+                        learning_resource_page.suitable_for_tags.add(tag)
+            except KeyError:
+                continue
+
+            try:
+                for tag_name in page_data["tags"]["Time period:"]:
+                    if not learning_resource_page.time_period_tags.filter(
+                        name=tag_name
+                    ).exists():
+                        tag, _ = TimePeriodTag.objects.get_or_create(name=tag_name)
+                        learning_resource_page.time_period_tags.add(tag)
+            except KeyError:
+                continue
+
+            try:
+                for tag_name in page_data["tags"]["Curriculum topics:"]:
+                    if not learning_resource_page.topic_tags.filter(
+                        name=tag_name
+                    ).exists():
+                        tag, _ = TopicTag.objects.get_or_create(name=tag_name)
+                        learning_resource_page.topic_tags.add(tag)
+            except KeyError:
+                continue
 
             if not learning_resource_page.id:
                 learning_resouce_index_page.add_child(instance=learning_resource_page)
             else:
                 learning_resource_page.save()
-
-            try:
-                for tag_name in page_data['tags']["Suitable for:"]:
-                    tag, _ = SuitableForTag.objects.get_or_create(name=tag_name)
-                    TaggedSuitableForLearningResourceTag.objects.create(
-                        tag=tag, content_object=learning_resource_page
-                    )
-            except KeyError:
-                continue
-
-            try:
-                for tag_name in page_data['tags']["Time period:"]:
-                    tag, _ = TimePeriodTag.objects.get_or_create(name=tag_name)
-                    TaggedTimePeriodLearningResourceTag.objects.create(
-                        tag=tag, content_object=learning_resource_page
-                    )
-            except KeyError:
-                continue
-
-            try:
-                for tag_name in page_data['tags']["Curriculum topics:"]:
-                    tag, _ = TopicTag.objects.get_or_create(name=tag_name)
-                    TaggedTopicLearningResourceTag.objects.create(
-                        tag=tag, content_object=learning_resource_page
-                    )
-            except KeyError:
-                continue
