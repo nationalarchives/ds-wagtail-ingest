@@ -3,6 +3,10 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INSTALLED_APPS = INSTALLED_APPS + [
+    "django_extensions",
+]
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '#8ee3-hpaw+_enm-^20irgts6i*f88$j*cw+tnew!)6ln-94r9'
 
