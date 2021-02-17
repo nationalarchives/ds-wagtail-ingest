@@ -26,7 +26,7 @@ class CategoryTag(TagBase):
     free_tagging = False
 
     class Meta:
-        verbose_name = "theme tag"
+        verbose_name = "Category tag"
 
 
 class TaggedThemeContentHubPageItem(ItemBase):
