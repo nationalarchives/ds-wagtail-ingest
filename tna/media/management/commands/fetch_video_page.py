@@ -14,7 +14,7 @@ from ...models import VideoPage, VideoIndexPage
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("video")
+requests_cache.install_cache("/tmp/video")
 
 
 def fetch_urls():

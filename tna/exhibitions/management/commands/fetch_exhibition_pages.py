@@ -15,7 +15,7 @@ from ...models import (
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("research-guides")
+requests_cache.install_cache("/tmp/research-guides")
 
 
 def fetch_page_data():

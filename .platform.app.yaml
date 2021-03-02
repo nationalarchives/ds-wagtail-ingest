@@ -15,13 +15,33 @@ variables:
 
 dependencies:
   python3:
-    poetry: '1.0.5'
+    poetry: '1.1.4'
+
+# The size of the persistent disk of the application (in MB).
+disk: 256
+
+# The relationships of the application with services or other applications.
+#
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form <service name>:<endpoint name>.
+relationships:
+    db: 'db:postgresql'
+    elasticsearch: 'elasticsearch:elasticsearch'
+
+hooks:
+    build: |
+      poetry config virtualenvs.create false
+      poetry config virtualenvs.in-project true 
+      poetry install --no-dev
+
+      python manage.py collectstatic --no-input
 
 web:
   upstream:
     socket_family: unix
   commands:
-    start: poetry run gunicorn config.wsgi:application --bind unix:$SOCKET -c gunicorn.conf.py
+    start: gunicorn config.wsgi:application --bind unix:$SOCKET --config gunicorn.conf.py
   locations:
     "/":
       root: ""
@@ -57,24 +77,3 @@ mounts:
   logs:
     source: local
     source_path: logs
-
-# The size of the persistent disk of the application (in MB).
-disk: 256
-
-# The relationships of the application with services or other applications.
-#
-# The left-hand side is the name of the relationship as it will be exposed
-# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
-# side is in the form <service name>:<endpoint name>.
-relationships:
-    db: 'db:postgresql'
-    elasticsearch: 'elasticsearch:elasticsearch'
-
-
-hooks:
-    build: |
-      poetry install
-
-web:
-  commands:
-    start: "python server.py"

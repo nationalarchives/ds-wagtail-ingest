@@ -14,7 +14,7 @@ from ...models import (
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("research-guides")
+requests_cache.install_cache("/tmp/research-guides")
 
 
 def fetch_page_data():
@@ -25,7 +25,6 @@ def fetch_page_data():
     document = pq(page)
 
     for a in document.find(".resource-results ul > li > a"):
-        tags = {a.attrib['href']: a.text for a in pq(a).siblings('span.tag a')}
         yield {
             'title':a.text, 
             'url':a.attrib["href"], 

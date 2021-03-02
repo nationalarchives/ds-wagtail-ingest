@@ -14,7 +14,7 @@ from ...models import AudioPage, AudioIndexPage
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("Audio")
+requests_cache.install_cache("/tmp/audio")
 
 
 def fetch_page_urls():

@@ -1,0 +1,7 @@
+elasticsearch:
+    type: elasticsearch:7.7
+    disk: 256
+
+db:
+    type: postgresql:12
+    disk: 256

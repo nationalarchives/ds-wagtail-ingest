@@ -14,15 +14,13 @@ from ...models import (
     BlogPage,
     CategoryTag,
     ThemeTag,
-    TaggedThemeBlogPageItem,
-    TaggedCategoryBlogPageItem,
     BlogIndexPage,
 )
 from ....home.models import HomePage
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("blog_page")
+requests_cache.install_cache("/tmp/blog_page")
 
 # Some pages doesn't use the stanadard blog page structure.
 PAGES_TO_IGNORE = [
@@ -67,9 +65,8 @@ class Command(BaseCommand):
 
         home_page = HomePage.objects.get()
 
-        try:
-            blog_index_page = BlogIndexPage.objects.get()
-        except BlogIndexPage.DoesNotExist:
+        blog_index_page = BlogIndexPage.objects.first()
+        if not blog_index_page:
             blog_index_page = BlogIndexPage(title="Blogs")
             home_page.add_child(instance=blog_index_page)
 

@@ -19,7 +19,7 @@ from ...models import (
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
-requests_cache.install_cache("learning_resources")
+requests_cache.install_cache("/tmp/learning_resources")
 
 
 def fetch_page_urls():
