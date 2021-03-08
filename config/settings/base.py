@@ -14,16 +14,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from distutils.util import strtobool
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 DEBUG = strtobool(os.getenv("DEBUG", "False"))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'tna.blog',
@@ -174,3 +179,13 @@ WAGTAIL_SITE_NAME = "tna"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+# Sentry
+
+sentry_sdk.init(
+    dsn="https://8f7012c92ead4c6fbf25835e9fcd8bfd@o545204.ingest.sentry.io/5666736",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=0.5,
+    send_default_pii=True,
+)
