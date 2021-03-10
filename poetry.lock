@@ -682,7 +682,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "wagtail"
-version = "2.12"
+version = "2.12.3"
 description = "A Django content management system."
 category = "main"
 optional = false
@@ -695,7 +695,7 @@ Django = ">=2.2,<3.2"
 django-filter = ">=2.2,<3.0"
 django-modelcluster = ">=5.1,<6.0"
 django-taggit = ">=1.0,<2.0"
-django-treebeard = ">=4.2.0,<5.0"
+django-treebeard = ">=4.2.0,<4.5 || >4.5,<5.0"
 djangorestframework = ">=3.11.1,<4.0"
 draftjs-exporter = ">=2.1.5,<3.0"
 html5lib = ">=0.999,<2"
@@ -766,7 +766,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f5f7823b0e0315ff44791cabfe9715b2137f2010437b39ee0a122ea4c3e4d7bf"
+content-hash = "74c5e3a4b03a952171fda73339ff8084cf7e1b46266b55b4f5eaaeae8ab22c9a"
 
 [metadata.files]
 anyascii = [
@@ -1153,8 +1153,8 @@ urllib3 = [
     {file = "urllib3-1.26.3.tar.gz", hash = "sha256:de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"},
 ]
 wagtail = [
-    {file = "wagtail-2.12-py3-none-any.whl", hash = "sha256:aeafcc8350110c7e2a7dec930bff1e89a102f4e008198b4a7e030d8f1969e6e0"},
-    {file = "wagtail-2.12.tar.gz", hash = "sha256:1b3623fa62ce331804a738c9e6a66f20870a16bf6661177242c0a882a7a3e7d3"},
+    {file = "wagtail-2.12.3-py3-none-any.whl", hash = "sha256:28a7f8d1363891c3bbf16726f1dc1ef0fa2487153e6a4b71e8eb9bc31b0f355c"},
+    {file = "wagtail-2.12.3.tar.gz", hash = "sha256:15bdca888410fae0586767eedddf0205ee676653171da2d45792a739814d3587"},
 ]
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},

@@ -6,7 +6,7 @@ authors = ["Dan Bentley <dan@numiko.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-wagtail = "2.12"
+wagtail = "2.12.3"
 requests = "^2.25.1"
 pyquery = "^1.4.3"
 requests_cache = "^0.5.2"
