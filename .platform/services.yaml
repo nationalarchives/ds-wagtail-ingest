@@ -1,4 +1,4 @@
-elasticsearch:
+search:
     type: elasticsearch:7.7
     disk: 256
 

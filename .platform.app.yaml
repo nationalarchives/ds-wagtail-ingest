@@ -27,7 +27,7 @@ disk: 256
 # side is in the form <service name>:<endpoint name>.
 relationships:
     db: 'db:postgresql'
-    elasticsearch: 'elasticsearch:elasticsearch'
+    elasticsearch: 'search:elasticsearch'
 
 hooks:
     build: |
