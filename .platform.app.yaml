@@ -77,3 +77,9 @@ mounts:
   logs:
     source: local
     source_path: logs
+
+
+crons:
+  import_events:
+    spec: 0 2 * * *
+    cmd: python manage.py update_index
