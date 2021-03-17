@@ -8,7 +8,7 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('collections', '0001_initial'),
+        ('hubs', '0001_initial'),
     ]
 
     operations = [

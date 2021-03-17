@@ -12,7 +12,7 @@ from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.documents import get_document_model_string
 
-from ..collections.models import (
+from ..hubs.models import (
     CategoryTag,
     ThemeTag,
 )

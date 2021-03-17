@@ -34,7 +34,7 @@ class TaggedThemeContentHubPageItem(ItemBase):
         ThemeTag, related_name="tagged_content_hub_page_items", on_delete=models.CASCADE
     )
     content_object = ParentalKey(
-        "collections.ContentHubPage",
+        "hubs.ContentHubPage",
         on_delete=models.CASCADE,
         related_name="tagged_content_hub_page_items",
     )
@@ -47,7 +47,7 @@ class TaggedCategoryContentHubPageItem(ItemBase):
         on_delete=models.CASCADE,
     )
     content_object = ParentalKey(
-        "collections.ContentHubPage",
+        "hubs.ContentHubPage",
         on_delete=models.CASCADE,
         related_name="tagged_category_items",
     )

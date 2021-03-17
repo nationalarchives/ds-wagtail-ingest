@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('collections', '__first__'),
+        ('hubs', '__first__'),
         ('wagtailcore', '0059_apply_collection_ordering'),
     ]
 
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='blog.blogpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='collections.themetag')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='hubs.themetag')),
             ],
             options={
                 'abstract': False,
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='blog.blogpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='collections.categorytag')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='hubs.categorytag')),
             ],
             options={
                 'abstract': False,
@@ -64,11 +64,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='blogpage',
             name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedCategoryBlogPageItem', to='collections.CategoryTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedCategoryBlogPageItem', to='hubs.CategoryTag', verbose_name='Tags'),
         ),
         migrations.AddField(
             model_name='blogpage',
             name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedThemeBlogPageItem', to='collections.ThemeTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedThemeBlogPageItem', to='hubs.ThemeTag', verbose_name='Tags'),
         ),
     ]

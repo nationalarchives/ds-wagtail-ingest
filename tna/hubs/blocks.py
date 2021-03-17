@@ -8,11 +8,11 @@ class ParagraphWithMedia(blocks.StructBlock):
     page = blocks.PageChooserBlock(page_type=("media.AudioPage", "media.VideoPage"))
 
     class Meta:
-        template = "collections/blocks/paragraph_with_media.html"
+        template = "hubs/blocks/paragraph_with_media.html"
 
 
 def theme_tag_choices():
-    # ThemeTag = apps.get_model("collections.ThemeTag")
+    # ThemeTag = apps.get_model("hubs.ThemeTag")
     return [
         (1123, "11Th November"),
         (1599, "14Th Century"),
@@ -1887,7 +1887,7 @@ class RelatedTaggedContentBlock(blocks.StructBlock):
 
         tag_ids = value["tags"]
         BlogPage = apps.get_model("blog.BlogPage")
-        ThemeTag = apps.get_model("collections.ThemeTag")
+        ThemeTag = apps.get_model("hubs.ThemeTag")
 
         context["selected_tags"] = ThemeTag.objects.filter(id__in=tag_ids)
         context["related_pages"] = BlogPage.objects.filter(theme_tags__in=tag_ids)
@@ -1895,7 +1895,7 @@ class RelatedTaggedContentBlock(blocks.StructBlock):
         return context
 
     class Meta:
-        template = "collections/blocks/related_tagged_content.html"
+        template = "hubs/blocks/related_tagged_content.html"
 
 
 class ContentHubBodyBlock(blocks.StreamBlock):

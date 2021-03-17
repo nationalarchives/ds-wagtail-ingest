@@ -55,8 +55,8 @@ class Migration(migrations.Migration):
             name='TaggedThemeContentHubPageItem',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.contenthubpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.themetag')),
+                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='hubs.contenthubpage')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='hubs.themetag')),
             ],
             options={
                 'abstract': False,
@@ -66,8 +66,8 @@ class Migration(migrations.Migration):
             name='TaggedCategoryContentHubPageItem',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='collections.contenthubpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.categorytag')),
+                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='hubs.contenthubpage')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='hubs.categorytag')),
             ],
             options={
                 'abstract': False,
@@ -76,11 +76,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contenthubpage',
             name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='collections.TaggedCategoryContentHubPageItem', to='collections.CategoryTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='hubs.TaggedCategoryContentHubPageItem', to='hubs.CategoryTag', verbose_name='Tags'),
         ),
         migrations.AddField(
             model_name='contenthubpage',
             name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='collections.TaggedThemeContentHubPageItem', to='collections.ThemeTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='hubs.TaggedThemeContentHubPageItem', to='hubs.ThemeTag', verbose_name='Tags'),
         ),
     ]

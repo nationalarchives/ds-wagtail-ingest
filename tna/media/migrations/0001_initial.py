@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('collections', '__first__'),
+        ('hubs', '__first__'),
         ('wagtailcore', '0059_apply_collection_ordering'),
         ('wagtaildocs', '0010_document_file_hash'),
     ]
@@ -75,9 +75,9 @@ class Migration(migrations.Migration):
                 ('source_url', models.URLField()),
                 ('body', models.TextField()),
                 ('date_published', models.DateTimeField()),
-                ('content_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryVideoItem', to='collections.CategoryTag', verbose_name='Tags')),
+                ('content_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryVideoItem', to='hubs.CategoryTag', verbose_name='Tags')),
                 ('file', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtaildocs.document')),
-                ('theme_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeVideoItem', to='collections.ThemeTag', verbose_name='Tags')),
+                ('theme_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeVideoItem', to='hubs.ThemeTag', verbose_name='Tags')),
             ],
             options={
                 'abstract': False,
@@ -92,14 +92,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='taggedthemevideoitem',
             name='tag',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='collections.themetag'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='hubs.themetag'),
         ),
         migrations.CreateModel(
             name='TaggedThemeAudioItem',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_theme_items', to='media.audiopage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='collections.themetag')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='hubs.themetag')),
             ],
             options={
                 'abstract': False,
@@ -113,14 +113,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='taggedcategoryvideoitem',
             name='tag',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='collections.categorytag'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='hubs.categorytag'),
         ),
         migrations.CreateModel(
             name='TaggedCategoryAudioItem',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_items', to='media.audiopage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='collections.categorytag')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='hubs.categorytag')),
             ],
             options={
                 'abstract': False,
@@ -129,7 +129,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='audiopage',
             name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryAudioItem', to='collections.CategoryTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryAudioItem', to='hubs.CategoryTag', verbose_name='Tags'),
         ),
         migrations.AddField(
             model_name='audiopage',
@@ -139,6 +139,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='audiopage',
             name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeAudioItem', to='collections.ThemeTag', verbose_name='Tags'),
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeAudioItem', to='hubs.ThemeTag', verbose_name='Tags'),
         ),
     ]
