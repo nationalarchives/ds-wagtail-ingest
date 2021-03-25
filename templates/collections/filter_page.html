@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://etna-prototypes.herokuapp.com/styles/dist/styles.css" />
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i|Roboto+Mono:400,700&amp;display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+            <title>Magna Carta</title>
+</head>
+
+<body>
+
+<div class="row mobile-banner">
+    <div class="container">
+        <div class="alert alert-primary" role="alert">
+            This is a prototype for small screens. Resize your browser window width to below 576px to see it.
+        </div>
+    </div>
+</div>
+
+
+<main class="explorer">
+    <ul class="nav justify-content-end hidden-on-large-screens" id="main-navigation">
+    <li class="nav-item">
+        <a class="nav-link" href="#">Sign in</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Menu <i class="bi bi-list"></i></a>
+    </li>
+</ul>
+    <div class="container" id="results">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="/explorer/">Explore</a></li>
+                <li class="breadcrumb-item"><a href="/explorer/time-periods">Time periods</a></li>
+                <li class="breadcrumb-item"><a href="/explorer/time-periods/medieval.php">Medieval</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Magna Carta</li>
+            </ol>
+        </nav>
+        <h1 class="sr-only">Results</h1>
+
+        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active lead" id="records-tab" data-toggle="tab" href="#records" role="tab" aria-controls="records" aria-selected="true"><strong>56 records</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link lead" id="interpretive-tab" data-toggle="tab" href="#interpretive" role="tab" aria-controls="interpretive" aria-selected="false"><strong>Interpretive content</strong></a>
+            </li>
+        </ul>
+        <h2 class="sr-only">Records</h2>
+
+        <div class="results">
+
+            <div class="d-flex flex-row-reverse mt-4 mb-4">
+                <select class="p-1">
+                    <option>Sorted by collection highlights</option>
+                </select>
+            </div>
+
+            {% for result in results %}
+            <div class="result {# special #} mb-4">
+                {% comment %}
+                  <div class="result-tab">Collection highlight</div>
+                {% endcomment %}
+                  <div class="p-4">
+                    <h3>{{ result.name }}</h3>
+                    <p>{{ result.description }}</p>
+                    <p><strong>Date:</strong> {{ result.date }}</p>
+                    <p><strong>Reference:</strong> {{ result.reference }}</p>
+                  </div>
+              </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</main>
+<script>
+    document.getElementsByTagName("html")[0].className = "js";
+</script>
+</body>
+
+</html>

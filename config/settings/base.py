@@ -32,6 +32,7 @@ DEBUG = strtobool(os.getenv("DEBUG", "False"))
 
 INSTALLED_APPS = [
     'tna.blog',
+    'tna.collections',
     'tna.hubs',
     'tna.exhibitions',
     'tna.home',
