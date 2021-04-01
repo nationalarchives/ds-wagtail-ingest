@@ -25,10 +25,16 @@ def fetch_page_data():
     document = pq(page)
 
     for a in document.find(".resource-results ul > li > a"):
+
+        url = a.attrib["href"]
+        research_guide_document = pq(requests.get(url).content)
+        body = research_guide_document.find("#research-guide-content").html() or ""
+
         yield {
-            'title':a.text, 
-            'url':a.attrib["href"], 
-            'tags': [a.text.strip().title() for a in pq(a).siblings('span.tag a')]
+            "title": a.text,
+            "url": url,
+            "body": body,
+            "tags": [a.text.strip().title() for a in pq(a).siblings("span.tag a")],
         }
 
 
@@ -48,19 +54,19 @@ class Command(BaseCommand):
             print(f"Fetching {page_data['url']}")
 
             try:
-                page = ResearchGuidePage.objects.get(source_url=page_data['url'])
+                page = ResearchGuidePage.objects.get(source_url=page_data["url"])
             except ResearchGuidePage.DoesNotExist:
-                page = ResearchGuidePage(source_url=page_data['url'])
+                page = ResearchGuidePage(source_url=page_data["url"])
 
-            page.title = page_data['title']
+            page.title = page_data["title"]
+            page.body = page_data["body"]
 
-            for name in page_data['tags']:
+            for name in page_data["tags"]:
                 if not page.research_guide_tags.filter(name=name).exists():
                     tag, _ = ResearchGuideTag.objects.get_or_create(name=name)
                     page.research_guide_tags.add(tag)
 
-            if not page.id:
+            if not page.pk:
                 research_guide_index_page.add_child(instance=page)
             else:
                 page.save()
-
