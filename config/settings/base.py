@@ -113,6 +113,21 @@ DATABASES = {
 }
 
 
+# Search
+# https://docs.wagtail.io/en/stable/topics/search/backends.html?highlight=WAGTAILSEARCH_BACKENDS%20#backends
+
+WAGTAILSEARCH_BACKENDS = {
+    "default": {
+        "BACKEND": "wagtail.search.backends.elasticsearch7",
+        "URLS": [os.getenv("ELASTICSEARCH_URL")],
+        "INDEX": "wagtail",
+        "TIMEOUT": 5,
+        "OPTIONS": {},
+        "INDEX_SETTINGS": {},
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
