@@ -5,6 +5,7 @@ from modelcluster.fields import ParentalKey
 
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
+from wagtail.search import index
 
 from taggit.models import TagBase, ItemBase
 
@@ -54,6 +55,17 @@ class ResearchGuidePage(Page):
     content_panels = [
         FieldPanel("source_url"),
         FieldPanel("research_guide_tags"),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("source_url"),
+        index.RelatedFields(
+            "research_guide_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
     ]
 
     parent_page_types = ["research.ResearchGuideIndexPage"]
