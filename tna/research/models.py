@@ -4,6 +4,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 
 from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.search import index
 
@@ -48,17 +49,20 @@ class ResearchGuidePage(Page):
     """
 
     source_url = models.URLField()
+    body = RichTextField(blank=True)
     research_guide_tags = ClusterTaggableManager(
         through=TaggedResearchGuide, blank=True
     )
 
     content_panels = [
         FieldPanel("source_url"),
+        FieldPanel("body"),
         FieldPanel("research_guide_tags"),
     ]
 
     search_fields = Page.search_fields + [
         index.SearchField("source_url"),
+        index.SearchField("body"),
         index.RelatedFields(
             "research_guide_tags",
             [
