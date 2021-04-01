@@ -9,7 +9,7 @@ from pyquery import PyQuery as pq
 from django.core.management.base import BaseCommand
 
 from ....home.models import HomePage
-from ....hubs.models import CategoryTag, ThemeTag
+from ....collections.models import CategoryTag, ThemeTag
 from ...models import VideoPage, VideoIndexPage
 
 DATEIME_FORMAT = "%A %d %B %Y"
