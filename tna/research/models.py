@@ -4,11 +4,12 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 
 from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.search import index
 
 from taggit.models import TagBase, ItemBase
+
+from ..richtext.fields import RichTextField
 
 
 class ResearchGuideTag(TagBase):
