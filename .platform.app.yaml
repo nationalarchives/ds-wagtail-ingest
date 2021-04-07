@@ -32,7 +32,7 @@ relationships:
 hooks:
     build: |
       poetry config virtualenvs.create false
-      poetry config virtualenvs.in-project true 
+      poetry config virtualenvs.in-project true
       poetry install --no-dev
 
       python manage.py collectstatic --no-input
@@ -82,4 +82,4 @@ mounts:
 crons:
   import_events:
     spec: 0 2 * * *
-    cmd: python manage.py update_index
+    cmd: python manage.py update_index --chunk-size 5
