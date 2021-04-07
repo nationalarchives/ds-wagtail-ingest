@@ -1,3 +1,5 @@
+import csv
+
 import requests
 import requests_cache
 
@@ -10,11 +12,48 @@ from ...models import (
     ResearchGuidePage,
     ResearchGuideIndexPage,
     ResearchGuideTag,
+    CategoryTag,
 )
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
 requests_cache.install_cache("/tmp/research-guides")
+
+
+def find_shared_tag(research_guide_tag):
+    with open("terms.csv") as file:
+        for row in csv.reader(file, delimiter=","):
+            source = row[0]
+            topic = row[1]
+            category = row[5]
+            sub_category = row[6]
+
+            if not topic:
+                continue
+
+            if category.lower() == research_guide_tag.lower():
+                return source, topic
+
+            if sub_category.lower() == research_guide_tag.lower():
+                return source, topic
+
+            if research_guide_tag.lower() in category.lower():
+                return source, topic
+
+            if research_guide_tag.lower() in sub_category.lower():
+                return source, topic
+
+        raise Exception(f'Unmatched tag: {research_guide_tag}')
+
+
+def get_tag_class(source):
+    return CategoryTag
+
+
+# source, topic = find_shared_tag('caribbean')
+# cls = get_tag_class(source)
+# category_tag = cls.objects.get_or_create(name=topic)
+# import ipdb; ipdb.set_trace()
 
 
 def fetch_page_data():
@@ -65,6 +104,16 @@ class Command(BaseCommand):
                 if not page.research_guide_tags.filter(name=name).exists():
                     tag, _ = ResearchGuideTag.objects.get_or_create(name=name)
                     page.research_guide_tags.add(tag)
+
+            for tag in page.research_guide_tags.all():
+                try:
+                    source, topic = find_shared_tag(tag.name)
+                except Exception as e:
+                    print(e)
+                    continue
+                cls = get_tag_class(source)
+                category_tag, created = cls.objects.get_or_create(name=topic)
+                page.category_tags.add(category_tag)
 
             if not page.pk:
                 research_guide_index_page.add_child(instance=page)
