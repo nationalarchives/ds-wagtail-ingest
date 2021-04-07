@@ -12,6 +12,26 @@ from taggit.models import TagBase, ItemBase
 from ..richtext.fields import RichTextField
 
 
+class CategoryTag(TagBase):
+    free_tagging = False
+
+    class Meta:
+        verbose_name = "Category"
+
+
+class CategoryTagResearchGuide(ItemBase):
+    tag = models.ForeignKey(
+        CategoryTag,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
+    content_object = ParentalKey(
+        "research.ResearchGuidePage",
+        on_delete=models.CASCADE,
+        related_name="pages",
+    )
+
+
 class ResearchGuideTag(TagBase):
     free_tagging = False
 
@@ -54,11 +74,13 @@ class ResearchGuidePage(Page):
     research_guide_tags = ClusterTaggableManager(
         through=TaggedResearchGuide, blank=True
     )
+    category_tags = ClusterTaggableManager(through=CategoryTagResearchGuide, blank=True)
 
     content_panels = [
         FieldPanel("source_url"),
         FieldPanel("body"),
         FieldPanel("research_guide_tags"),
+        FieldPanel("category_tags"),
     ]
 
     search_fields = Page.search_fields + [
@@ -66,6 +88,13 @@ class ResearchGuidePage(Page):
         index.SearchField("body"),
         index.RelatedFields(
             "research_guide_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
+        index.RelatedFields(
+            "category_tags",
             [
                 index.SearchField("name"),
                 index.FilterField("slug"),
