@@ -7,15 +7,17 @@ from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, ItemBase
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField, RichTextField
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.documents import get_document_model_string
+from wagtail.search import index
 
 from ..collections.models import (
     CategoryTag,
     ThemeTag,
 )
+from ..richtext.fields import RichTextField
 
 
 class TaggedThemeAudioItem(ItemBase):
@@ -68,6 +70,25 @@ class AudioPage(Page):
         FieldPanel("content_tags", heading="Content tags"),
         FieldPanel("theme_tags", heading="Theme tags"),
         DocumentChooserPanel("file"),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("source_url"),
+        index.SearchField("body"),
+        index.RelatedFields(
+            "content_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
+        index.RelatedFields(
+            "theme_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
     ]
 
     parent_page_types = ["media.AudioIndexPage"]
@@ -127,6 +148,25 @@ class VideoPage(Page):
         FieldPanel("content_tags", heading="Content tags"),
         FieldPanel("theme_tags", heading="Theme tags"),
         DocumentChooserPanel("file"),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("source_url"),
+        index.SearchField("body"),
+        index.RelatedFields(
+            "content_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
+        index.RelatedFields(
+            "theme_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
     ]
 
     parent_page_types = ["media.VideoIndexPage"]

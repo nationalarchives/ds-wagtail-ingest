@@ -7,9 +7,10 @@ from taggit.models import ItemBase
 
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField
+from wagtail.search import index
 
 from ..collections.models import ThemeTag, CategoryTag
+from ..richtext.fields import RichTextField
 
 
 class TaggedThemeBlogPageItem(ItemBase):
@@ -56,6 +57,25 @@ class BlogPage(Page):
         FieldPanel("date_published"),
         FieldPanel("content_tags", heading="Content tags"),
         FieldPanel("theme_tags", heading="Theme tags"),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("source_url"),
+        index.SearchField("body"),
+        index.RelatedFields(
+            "content_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
+        index.RelatedFields(
+            "theme_tags",
+            [
+                index.SearchField("name"),
+                index.FilterField("slug"),
+            ],
+        ),
     ]
 
     parent_page_types = ["blog.BlogIndexPage"]
