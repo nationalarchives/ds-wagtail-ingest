@@ -18,11 +18,21 @@ requests_cache.install_cache("/tmp/video")
 
 
 def fetch_urls():
-    for i in range(1, 29):
+    # The video index currently contains ~29 pages. In theory, a while True would work
+    # here but I don't feel comfortable potentially scraping the TNA site indefinitely
+    for i in range(0, 35):
         base_url = (
             f"https://media.nationalarchives.gov.uk/index.php/category/video/page/{i}/"
         )
-        page = requests.get(base_url).content
+        response = requests.get(base_url, allow_redirects=False)
+
+        # The index pages respond with a redirect instead of a 404 if a page isn't found.
+        if response.status_code == 301 and "PageNotFound" in response.headers.get(
+            "Location", ""
+        ):
+            return
+
+        page = response.content
         document = pq(page)
 
         for a in document.find("a.content-card"):
