@@ -41,6 +41,11 @@ def fetch_urls():
         ):
             return
 
+        # The first page in a paginated blog list, redirects from /blogposts/page/1/ to /blogposts/
+        if response.status_code == 301:
+            response = requests.get(response.headers['Location'])
+
+
         page = response.content
         document = pq(page)
 
