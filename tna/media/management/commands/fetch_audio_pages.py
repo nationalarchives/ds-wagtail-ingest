@@ -32,6 +32,10 @@ def fetch_page_urls():
         ):
             return
 
+        # The first page in a paginated list, redirects from /audio/page/1/ to /audio/
+        if response.status_code == 301:
+            response = requests.get(response.headers['Location'])
+
         page = response.content
         document = pq(page)
 
