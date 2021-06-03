@@ -59,7 +59,7 @@ if search_config:
                 f"{search_config['scheme']}://{search_config['username']}:{search_config['password']}@{search_config['host']}:{search_config['port']}"
             ],
             "INDEX": "wagtail",
-            "TIMEOUT": 5,
+            "TIMEOUT": 180,
             "OPTIONS": {},
             "INDEX_SETTINGS": {},
         }
