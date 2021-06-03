@@ -122,7 +122,7 @@ WAGTAILSEARCH_BACKENDS = {
         "URLS": [os.getenv("ELASTICSEARCH_URL")],
         "INDEX": "wagtail",
         "TIMEOUT": 60,
-        "OPTIONS": {},
+        "OPTIONS": {'retry_on_timeout': True, 'max_retries': 10},
         "INDEX_SETTINGS": {},
     }
 }
