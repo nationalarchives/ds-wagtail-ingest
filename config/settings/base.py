@@ -121,7 +121,7 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.elasticsearch7",
         "URLS": [os.getenv("ELASTICSEARCH_URL")],
         "INDEX": "wagtail",
-        "TIMEOUT": 60,
+        "TIMEOUT": 180,
         "OPTIONS": {'retry_on_timeout': True, 'max_retries': 10},
         "INDEX_SETTINGS": {},
     }
