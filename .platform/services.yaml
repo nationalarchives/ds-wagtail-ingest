@@ -1,6 +1,6 @@
 search:
     type: elasticsearch:7.7
-    disk: 256
+    disk: 512
     configuration:
         authentication:
             enabled: true
