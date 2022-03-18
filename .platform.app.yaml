@@ -80,6 +80,24 @@ mounts:
 
 
 crons:
-  import_events:
-    spec: 0 2 * * *
+  update_index:
+    spec: 0 5 * * *
     cmd: python manage.py update_index --chunk-size 5
+  fetch_blog_posts:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_blog_posts
+  fetch_research_guides:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_research_guides
+  fetch_insights_pages:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_insights_pages
+  fetch_video_pages:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_video_pages
+  fetch_audio_pages:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_audio_pages
+  fetch_learning_resources:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_learning_resources

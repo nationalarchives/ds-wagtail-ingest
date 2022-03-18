@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'tna.collections',
     'tna.exhibitions',
     'tna.home',
+    'tna.insights',
     'tna.lessons',
     'tna.media',
     'tna.research',
@@ -204,3 +205,8 @@ sentry_sdk.init(
     traces_sample_rate=0.5,
     send_default_pii=True,
 )
+
+
+# National Archives Scraper Credentials
+TNA_SCRAPER_EMAIL = os.getenv("TNA_SCRAPER_EMAIL")
+TNA_SCRAPER_PASSWORD = os.getenv("TNA_SCRAPER_PASSWORD")
