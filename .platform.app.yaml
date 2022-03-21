@@ -82,7 +82,7 @@ mounts:
 crons:
   update_index:
     spec: 0 5 * * *
-    cmd: python manage.py update_index --chunk-size 5
+    cmd: python manage.py update_index --chunk_size 5
   fetch_blog_posts:
     spec: 0 2 * * *
     cmd: python manage.py fetch_blog_posts
