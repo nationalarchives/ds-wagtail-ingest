@@ -16,6 +16,7 @@ variables:
 dependencies:
   python3:
     poetry: '1.1.4'
+    pip: '22.0.4'
 
 # The size of the persistent disk of the application (in MB).
 disk: 256
