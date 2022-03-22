@@ -13,6 +13,7 @@ from ..collections.models import ThemeTag, CategoryTag
 from ..richtext.fields import RichTextField
 
 
+
 class TaggedThemeBlogPageItem(ItemBase):
     tag = models.ForeignKey(
         ThemeTag, related_name="tagged_blog_page_items", on_delete=models.CASCADE
