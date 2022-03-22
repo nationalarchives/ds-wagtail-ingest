@@ -102,3 +102,6 @@ crons:
   fetch_learning_resources:
     spec: 0 2 * * *
     cmd: python manage.py fetch_learning_resources
+  fetch_results_pages:
+    spec: 0 2 * * *
+    cmd: python manage.py fetch_results_pages
