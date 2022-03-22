@@ -11,8 +11,10 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.documents import get_document_model_string
+from wagtail.search import index
 
 from .blocks import ContentHubBodyBlock
+from ..richtext.fields import RichTextField
 
 
 class ThemeTag(TagBase):
@@ -70,3 +72,31 @@ class ContentHubPage(Page):
         FieldPanel("content_tags", heading="Content tags"),
         FieldPanel("theme_tags", heading="Theme tags"),
     ]
+
+
+class ResultsIndexPage(Page):
+    max_count = 1
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["collections.ResultsPage"]
+
+
+class ResultsPage(Page):
+    source_url = models.URLField()
+    body = RichTextField()
+
+    content_panels = [
+        FieldPanel("source_url"),
+        FieldPanel("title"),
+        FieldPanel("body"),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("source_url"),
+        index.SearchField("body"),
+    ]
+
+    parent_page_types = ["collections.ResultsIndexPage"]
+    subpage_types = []
+
+    def __str__(self):
+        return self.title
