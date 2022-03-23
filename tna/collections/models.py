@@ -1,16 +1,12 @@
 from django.db import models
 
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
 from wagtail.search import index
 
-from taggit.models import ItemBase, TagBase
+from taggit.models import TagBase
 
 from ..richtext.fields import RichTextField
-from .blocks import ContentHubBodyBlock
 
 
 class ThemeTag(TagBase):
@@ -25,49 +21,6 @@ class CategoryTag(TagBase):
 
     class Meta:
         verbose_name = "Category tag"
-
-
-class TaggedThemeContentHubPageItem(ItemBase):
-    tag = models.ForeignKey(
-        ThemeTag, related_name="tagged_content_hub_page_items", on_delete=models.CASCADE
-    )
-    content_object = ParentalKey(
-        "collections.ContentHubPage",
-        on_delete=models.CASCADE,
-        related_name="tagged_content_hub_page_items",
-    )
-
-
-class TaggedCategoryContentHubPageItem(ItemBase):
-    tag = models.ForeignKey(
-        CategoryTag,
-        related_name="tagged_content_hub_page_items",
-        on_delete=models.CASCADE,
-    )
-    content_object = ParentalKey(
-        "collections.ContentHubPage",
-        on_delete=models.CASCADE,
-        related_name="tagged_category_items",
-    )
-
-
-class ContentHubPage(Page):
-    sub_title = models.CharField(max_length=255)
-    body = StreamField(ContentHubBodyBlock())
-    content_tags = ClusterTaggableManager(
-        through=TaggedCategoryContentHubPageItem, blank=True
-    )
-    theme_tags = ClusterTaggableManager(
-        through=TaggedThemeContentHubPageItem, blank=True
-    )
-
-    content_panels = [
-        FieldPanel("title"),
-        FieldPanel("sub_title"),
-        StreamFieldPanel("body"),
-        FieldPanel("content_tags", heading="Content tags"),
-        FieldPanel("theme_tags", heading="Theme tags"),
-    ]
 
 
 class ResultsIndexPage(Page):
