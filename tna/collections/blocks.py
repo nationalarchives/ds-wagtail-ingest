@@ -1,7 +1,6 @@
 from django.apps import apps
 
 from wagtail.core import blocks
-from wagtail.images.blocks import ImageChooserBlock
 
 
 class ParagraphWithMedia(blocks.StructBlock):

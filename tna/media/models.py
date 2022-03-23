@@ -2,15 +2,13 @@ from django.db import models
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from modelcluster.models import ClusterableModel
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
 from wagtail.documents import get_document_model_string
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.search import index
 
-from taggit.models import ItemBase, TagBase
+from taggit.models import ItemBase
 
 from ..collections.models import CategoryTag, ThemeTag
 from ..richtext.fields import RichTextField

@@ -1,10 +1,5 @@
-import re
-
-from datetime import datetime
-
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.utils import timezone
 
 import requests
 
@@ -21,8 +16,8 @@ INDEX_PAGE_URL = f"{BASE_URL}/explore-the-collection/"
 
 
 def login():
-    get_response = session.get(LOGIN_URL)
-    response = session.post(
+    session.get(LOGIN_URL)
+    session.post(
         LOGIN_URL,
         data={
             "csrfmiddlewaretoken": session.cookies["csrftoken"],

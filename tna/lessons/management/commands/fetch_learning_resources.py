@@ -10,9 +10,6 @@ from ...models import (
     LearningResourceIndexPage,
     LearningResourcePage,
     SuitableForTag,
-    TaggedSuitableForLearningResourceTag,
-    TaggedTimePeriodLearningResourceTag,
-    TaggedTopicLearningResourceTag,
     TimePeriodTag,
     TopicTag,
 )
@@ -23,7 +20,7 @@ requests_cache.install_cache("/tmp/learning_resources")
 
 
 def fetch_page_urls():
-    base_url = f"https://www.nationalarchives.gov.uk/education/sessions-and-resources/"
+    base_url = "https://www.nationalarchives.gov.uk/education/sessions-and-resources/"
     page = requests.get(base_url).content
     document = pq(page)
 

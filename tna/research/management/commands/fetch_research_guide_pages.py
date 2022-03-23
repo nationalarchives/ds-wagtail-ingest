@@ -58,7 +58,7 @@ def get_tag_class(source):
 
 def fetch_page_data():
     base_url = (
-        f"https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/"
+        "https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/"
     )
     page = requests.get(base_url).content
     document = pq(page)
@@ -112,7 +112,7 @@ class Command(BaseCommand):
                     print(e)
                     continue
                 cls = get_tag_class(source)
-                category_tag, created = cls.objects.get_or_create(name=topic)
+                category_tag, _ = cls.objects.get_or_create(name=topic)
                 page.category_tags.add(category_tag)
 
             if not page.pk:
