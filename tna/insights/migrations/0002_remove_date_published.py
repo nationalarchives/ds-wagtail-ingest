@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('insights', '0001_add_insights_page'),
+        ("insights", "0001_add_insights_page"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='insightspage',
-            name='date_published',
+            model_name="insightspage",
+            name="date_published",
         ),
     ]

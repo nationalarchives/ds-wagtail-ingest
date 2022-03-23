@@ -7,18 +7,18 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('media', '0001_initial'),
+        ("media", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='audiopage',
-            name='body',
+            model_name="audiopage",
+            name="body",
             field=wagtail.core.fields.RichTextField(),
         ),
         migrations.AlterField(
-            model_name='videopage',
-            name='body',
+            model_name="videopage",
+            name="body",
             field=wagtail.core.fields.RichTextField(),
         ),
     ]

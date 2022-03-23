@@ -11,134 +11,295 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('collections', '__first__'),
-        ('wagtailcore', '0059_apply_collection_ordering'),
-        ('wagtaildocs', '0010_document_file_hash'),
+        ("collections", "__first__"),
+        ("wagtailcore", "0059_apply_collection_ordering"),
+        ("wagtaildocs", "0010_document_file_hash"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AudioIndexPage',
+            name="AudioIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='AudioPage',
+            name="AudioPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('source_url', models.URLField()),
-                ('body', models.TextField()),
-                ('date_published', models.DateTimeField()),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("source_url", models.URLField()),
+                ("body", models.TextField()),
+                ("date_published", models.DateTimeField()),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='TaggedCategoryVideoItem',
+            name="TaggedCategoryVideoItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='TaggedThemeVideoItem',
+            name="TaggedThemeVideoItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='VideoIndexPage',
+            name="VideoIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='VideoPage',
+            name="VideoPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('source_url', models.URLField()),
-                ('body', models.TextField()),
-                ('date_published', models.DateTimeField()),
-                ('content_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryVideoItem', to='collections.CategoryTag', verbose_name='Tags')),
-                ('file', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtaildocs.document')),
-                ('theme_tags', modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeVideoItem', to='collections.ThemeTag', verbose_name='Tags')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("source_url", models.URLField()),
+                ("body", models.TextField()),
+                ("date_published", models.DateTimeField()),
+                (
+                    "content_tags",
+                    modelcluster.contrib.taggit.ClusterTaggableManager(
+                        blank=True,
+                        help_text="A comma-separated list of tags.",
+                        through="media.TaggedCategoryVideoItem",
+                        to="collections.CategoryTag",
+                        verbose_name="Tags",
+                    ),
+                ),
+                (
+                    "file",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtaildocs.document",
+                    ),
+                ),
+                (
+                    "theme_tags",
+                    modelcluster.contrib.taggit.ClusterTaggableManager(
+                        blank=True,
+                        help_text="A comma-separated list of tags.",
+                        through="media.TaggedThemeVideoItem",
+                        to="collections.ThemeTag",
+                        verbose_name="Tags",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.AddField(
-            model_name='taggedthemevideoitem',
-            name='content_object',
-            field=modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='media.videopage'),
+            model_name="taggedthemevideoitem",
+            name="content_object",
+            field=modelcluster.fields.ParentalKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tagged_video_items",
+                to="media.videopage",
+            ),
         ),
         migrations.AddField(
-            model_name='taggedthemevideoitem',
-            name='tag',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='collections.themetag'),
+            model_name="taggedthemevideoitem",
+            name="tag",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tagged_video_items",
+                to="collections.themetag",
+            ),
         ),
         migrations.CreateModel(
-            name='TaggedThemeAudioItem',
+            name="TaggedThemeAudioItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_theme_items', to='media.audiopage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='collections.themetag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_theme_items",
+                        to="media.audiopage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_audio_items",
+                        to="collections.themetag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='taggedcategoryvideoitem',
-            name='content_object',
-            field=modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='media.videopage'),
+            model_name="taggedcategoryvideoitem",
+            name="content_object",
+            field=modelcluster.fields.ParentalKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tagged_category_items",
+                to="media.videopage",
+            ),
         ),
         migrations.AddField(
-            model_name='taggedcategoryvideoitem',
-            name='tag',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_video_items', to='collections.categorytag'),
+            model_name="taggedcategoryvideoitem",
+            name="tag",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tagged_video_items",
+                to="collections.categorytag",
+            ),
         ),
         migrations.CreateModel(
-            name='TaggedCategoryAudioItem',
+            name="TaggedCategoryAudioItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_items', to='media.audiopage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_audio_items', to='collections.categorytag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_content_items",
+                        to="media.audiopage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_audio_items",
+                        to="collections.categorytag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='audiopage',
-            name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedCategoryAudioItem', to='collections.CategoryTag', verbose_name='Tags'),
+            model_name="audiopage",
+            name="content_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="media.TaggedCategoryAudioItem",
+                to="collections.CategoryTag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='audiopage',
-            name='file',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtaildocs.document'),
+            model_name="audiopage",
+            name="file",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtaildocs.document",
+            ),
         ),
         migrations.AddField(
-            model_name='audiopage',
-            name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='media.TaggedThemeAudioItem', to='collections.ThemeTag', verbose_name='Tags'),
+            model_name="audiopage",
+            name="theme_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="media.TaggedThemeAudioItem",
+                to="collections.ThemeTag",
+                verbose_name="Tags",
+            ),
         ),
     ]

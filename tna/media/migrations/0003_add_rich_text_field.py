@@ -7,18 +7,18 @@ import tna.richtext.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('media', '0002_auto_20210216_1518'),
+        ("media", "0002_auto_20210216_1518"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='audiopage',
-            name='body',
+            model_name="audiopage",
+            name="body",
             field=tna.richtext.fields.RichTextField(),
         ),
         migrations.AlterField(
-            model_name='videopage',
-            name='body',
+            model_name="videopage",
+            name="body",
             field=tna.richtext.fields.RichTextField(),
         ),
     ]

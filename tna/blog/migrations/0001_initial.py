@@ -11,64 +11,140 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('collections', '__first__'),
-        ('wagtailcore', '0059_apply_collection_ordering'),
+        ("collections", "__first__"),
+        ("wagtailcore", "0059_apply_collection_ordering"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BlogIndexPage',
+            name="BlogIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='BlogPage',
+            name="BlogPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('source_url', models.URLField()),
-                ('body', models.TextField()),
-                ('date_published', models.DateTimeField()),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("source_url", models.URLField()),
+                ("body", models.TextField()),
+                ("date_published", models.DateTimeField()),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='TaggedThemeBlogPageItem',
+            name="TaggedThemeBlogPageItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='blog.blogpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='collections.themetag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_blog_page_items",
+                        to="blog.blogpage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_blog_page_items",
+                        to="collections.themetag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='TaggedCategoryBlogPageItem',
+            name="TaggedCategoryBlogPageItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='blog.blogpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_blog_page_items', to='collections.categorytag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_category_items",
+                        to="blog.blogpage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_blog_page_items",
+                        to="collections.categorytag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='blogpage',
-            name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedCategoryBlogPageItem', to='collections.CategoryTag', verbose_name='Tags'),
+            model_name="blogpage",
+            name="content_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="blog.TaggedCategoryBlogPageItem",
+                to="collections.CategoryTag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='blogpage',
-            name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.TaggedThemeBlogPageItem', to='collections.ThemeTag', verbose_name='Tags'),
+            model_name="blogpage",
+            name="theme_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="blog.TaggedThemeBlogPageItem",
+                to="collections.ThemeTag",
+                verbose_name="Tags",
+            ),
         ),
     ]

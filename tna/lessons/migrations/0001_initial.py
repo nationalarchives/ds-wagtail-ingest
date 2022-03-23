@@ -11,114 +11,263 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailcore', '0059_apply_collection_ordering'),
+        ("wagtailcore", "0059_apply_collection_ordering"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='LearningResourceIndexPage',
+            name="LearningResourceIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='LearningResourcePage',
+            name="LearningResourcePage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('source_url', models.URLField()),
-                ('sub_title', models.CharField(max_length=255)),
-                ('body', models.TextField()),
-                ('suggested_inquiry_question', models.CharField(blank=True, max_length=512)),
-                ('potential_activities', models.CharField(blank=True, max_length=512)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("source_url", models.URLField()),
+                ("sub_title", models.CharField(max_length=255)),
+                ("body", models.TextField()),
+                (
+                    "suggested_inquiry_question",
+                    models.CharField(blank=True, max_length=512),
+                ),
+                ("potential_activities", models.CharField(blank=True, max_length=512)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='SuitableForTag',
+            name="SuitableForTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
             ],
             options={
-                'verbose_name': 'Suitable for',
-            },
-        ),
-        migrations.CreateModel(
-            name='TimePeriodTag',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
-            ],
-            options={
-                'verbose_name': 'Suitable for',
-            },
-        ),
-        migrations.CreateModel(
-            name='TopicTag',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
-            ],
-            options={
-                'verbose_name': 'Topic',
-            },
-        ),
-        migrations.CreateModel(
-            name='TaggedTopicLearningResourceTag',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_topics', to='lessons.learningresourcepage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='lessons.topictag')),
-            ],
-            options={
-                'abstract': False,
-            },
-        ),
-        migrations.CreateModel(
-            name='TaggedTimePeriodLearningResourceTag',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_time_period_items', to='lessons.learningresourcepage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='lessons.timeperiodtag')),
-            ],
-            options={
-                'abstract': False,
+                "verbose_name": "Suitable for",
             },
         ),
         migrations.CreateModel(
-            name='TaggedSuitableForLearningResourceTag',
+            name="TimePeriodTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_suitable_for_items', to='lessons.learningresourcepage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='lessons.suitablefortag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
             ],
             options={
-                'abstract': False,
+                "verbose_name": "Suitable for",
+            },
+        ),
+        migrations.CreateModel(
+            name="TopicTag",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
+            ],
+            options={
+                "verbose_name": "Topic",
+            },
+        ),
+        migrations.CreateModel(
+            name="TaggedTopicLearningResourceTag",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_topics",
+                        to="lessons.learningresourcepage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="lessons.topictag",
+                    ),
+                ),
+            ],
+            options={
+                "abstract": False,
+            },
+        ),
+        migrations.CreateModel(
+            name="TaggedTimePeriodLearningResourceTag",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_time_period_items",
+                        to="lessons.learningresourcepage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="lessons.timeperiodtag",
+                    ),
+                ),
+            ],
+            options={
+                "abstract": False,
+            },
+        ),
+        migrations.CreateModel(
+            name="TaggedSuitableForLearningResourceTag",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_suitable_for_items",
+                        to="lessons.learningresourcepage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="lessons.suitablefortag",
+                    ),
+                ),
+            ],
+            options={
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='learningresourcepage',
-            name='suitable_for_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='lessons.TaggedSuitableForLearningResourceTag', to='lessons.SuitableForTag', verbose_name='Tags'),
+            model_name="learningresourcepage",
+            name="suitable_for_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="lessons.TaggedSuitableForLearningResourceTag",
+                to="lessons.SuitableForTag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='learningresourcepage',
-            name='time_period_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='lessons.TaggedTimePeriodLearningResourceTag', to='lessons.TimePeriodTag', verbose_name='Tags'),
+            model_name="learningresourcepage",
+            name="time_period_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="lessons.TaggedTimePeriodLearningResourceTag",
+                to="lessons.TimePeriodTag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='learningresourcepage',
-            name='topic_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='lessons.TaggedTopicLearningResourceTag', to='lessons.TopicTag', verbose_name='Tags'),
+            model_name="learningresourcepage",
+            name="topic_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="lessons.TaggedTopicLearningResourceTag",
+                to="lessons.TopicTag",
+                verbose_name="Tags",
+            ),
         ),
     ]

@@ -8,31 +8,51 @@ import tna.richtext.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0060_fix_workflow_unique_constraint'),
-        ('collections', '0003_auto_20210216_1921'),
+        ("wagtailcore", "0060_fix_workflow_unique_constraint"),
+        ("collections", "0003_auto_20210216_1921"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ResultsIndexPage',
+            name="ResultsIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='ResultsPage',
+            name="ResultsPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('source_url', models.URLField()),
-                ('body', tna.richtext.fields.RichTextField()),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("source_url", models.URLField()),
+                ("body", tna.richtext.fields.RichTextField()),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
     ]

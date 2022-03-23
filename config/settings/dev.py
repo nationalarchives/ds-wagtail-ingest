@@ -8,12 +8,12 @@ INSTALLED_APPS = INSTALLED_APPS + [
 ]
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#8ee3-hpaw+_enm-^20irgts6i*f88$j*cw+tnew!)6ln-94r9'
+SECRET_KEY = "#8ee3-hpaw+_enm-^20irgts6i*f88$j*cw+tnew!)6ln-94r9"
 
 # SECURITY WARNING: define the correct hosts in production!
-ALLOWED_HOSTS = ['*'] 
+ALLOWED_HOSTS = ["*"]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 try:

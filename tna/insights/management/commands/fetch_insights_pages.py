@@ -16,13 +16,14 @@ from ....home.models import HomePage
 
 session = requests.Session()
 
-LOGIN_URL = 'https://beta.nationalarchives.gov.uk/accounts/login/'
-INSIGHTS_INDEX_PAGE_URL = 'https://beta.nationalarchives.gov.uk/insight-pages/'
+LOGIN_URL = "https://beta.nationalarchives.gov.uk/accounts/login/"
+INSIGHTS_INDEX_PAGE_URL = "https://beta.nationalarchives.gov.uk/insight-pages/"
 
 
 def login():
     get_response = session.get(LOGIN_URL)
-    response = session.post(LOGIN_URL,
+    response = session.post(
+        LOGIN_URL,
         data={
             "csrfmiddlewaretoken": session.cookies["csrftoken"],
             "login": settings.TNA_SCRAPER_EMAIL,
@@ -43,9 +44,7 @@ def fetch_urls():
 
 
 def fetch_page_data(url):
-    slug = re.match(f"^{INSIGHTS_INDEX_PAGE_URL}(.*)/$", url)[
-        1
-    ]
+    slug = re.match(f"^{INSIGHTS_INDEX_PAGE_URL}(.*)/$", url)[1]
 
     page = session.get(url).content
     document = pq(page)

@@ -7,13 +7,13 @@ import tna.richtext.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_auto_20210216_1412'),
+        ("blog", "0002_auto_20210216_1412"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='blogpage',
-            name='body',
+            model_name="blogpage",
+            name="body",
             field=tna.richtext.fields.RichTextField(),
         ),
     ]

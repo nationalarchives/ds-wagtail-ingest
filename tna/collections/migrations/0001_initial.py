@@ -13,74 +13,189 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailcore', '0059_apply_collection_ordering'),
+        ("wagtailcore", "0059_apply_collection_ordering"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CategoryTag',
+            name="CategoryTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
             ],
             options={
-                'verbose_name': 'theme tag',
+                "verbose_name": "theme tag",
             },
         ),
         migrations.CreateModel(
-            name='ContentHubPage',
+            name="ContentHubPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('sub_title', models.CharField(max_length=255)),
-                ('body', wagtail.core.fields.StreamField([('paragraph_with_podcast', wagtail.core.blocks.StructBlock([('paragraph', wagtail.core.blocks.RichTextBlock()), ('page', wagtail.core.blocks.PageChooserBlock())]))])),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("sub_title", models.CharField(max_length=255)),
+                (
+                    "body",
+                    wagtail.core.fields.StreamField(
+                        [
+                            (
+                                "paragraph_with_podcast",
+                                wagtail.core.blocks.StructBlock(
+                                    [
+                                        (
+                                            "paragraph",
+                                            wagtail.core.blocks.RichTextBlock(),
+                                        ),
+                                        (
+                                            "page",
+                                            wagtail.core.blocks.PageChooserBlock(),
+                                        ),
+                                    ]
+                                ),
+                            )
+                        ]
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='ThemeTag',
+            name="ThemeTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
             ],
             options={
-                'verbose_name': 'theme tag',
+                "verbose_name": "theme tag",
             },
         ),
         migrations.CreateModel(
-            name='TaggedThemeContentHubPageItem',
+            name="TaggedThemeContentHubPageItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.contenthubpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.themetag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_content_hub_page_items",
+                        to="collections.contenthubpage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_content_hub_page_items",
+                        to="collections.themetag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='TaggedCategoryContentHubPageItem',
+            name="TaggedCategoryContentHubPageItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_category_items', to='collections.contenthubpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_content_hub_page_items', to='collections.categorytag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_category_items",
+                        to="collections.contenthubpage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_content_hub_page_items",
+                        to="collections.categorytag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='contenthubpage',
-            name='content_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='collections.TaggedCategoryContentHubPageItem', to='collections.CategoryTag', verbose_name='Tags'),
+            model_name="contenthubpage",
+            name="content_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="collections.TaggedCategoryContentHubPageItem",
+                to="collections.CategoryTag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='contenthubpage',
-            name='theme_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='collections.TaggedThemeContentHubPageItem', to='collections.ThemeTag', verbose_name='Tags'),
+            model_name="contenthubpage",
+            name="theme_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="collections.TaggedThemeContentHubPageItem",
+                to="collections.ThemeTag",
+                verbose_name="Tags",
+            ),
         ),
     ]

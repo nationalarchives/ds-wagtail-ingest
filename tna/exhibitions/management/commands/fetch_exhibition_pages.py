@@ -19,7 +19,9 @@ requests_cache.install_cache("/tmp/research-guides")
 
 
 def fetch_page_data():
-    base_url = f"https://www.nationalarchives.gov.uk/online-exhibitions/?sorted-by=a-z-by-title"
+    base_url = (
+        "https://www.nationalarchives.gov.uk/online-exhibitions/?sorted-by=a-z-by-title"
+    )
     page = requests.get(base_url).content
     document = pq(page)
 

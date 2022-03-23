@@ -9,35 +9,77 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('research', '0003_auto_20210401_1424'),
+        ("research", "0003_auto_20210401_1424"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CategoryTag',
+            name="CategoryTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(max_length=100, unique=True, verbose_name='slug')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="name"),
+                ),
+                (
+                    "slug",
+                    models.SlugField(max_length=100, unique=True, verbose_name="slug"),
+                ),
             ],
             options={
-                'verbose_name': 'Category',
+                "verbose_name": "Category",
             },
         ),
         migrations.CreateModel(
-            name='CategoryTagResearchGuide',
+            name="CategoryTagResearchGuide",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages', to='research.researchguidepage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='research.categorytag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pages",
+                        to="research.researchguidepage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="research.categorytag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='researchguidepage',
-            name='category_tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='research.CategoryTagResearchGuide', to='research.CategoryTag', verbose_name='Tags'),
+            model_name="researchguidepage",
+            name="category_tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="research.CategoryTagResearchGuide",
+                to="research.CategoryTag",
+                verbose_name="Tags",
+            ),
         ),
     ]

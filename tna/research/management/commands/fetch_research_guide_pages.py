@@ -43,7 +43,7 @@ def find_shared_tag(research_guide_tag):
             if research_guide_tag.lower() in sub_category.lower():
                 return source, topic
 
-        raise Exception(f'Unmatched tag: {research_guide_tag}')
+        raise Exception(f"Unmatched tag: {research_guide_tag}")
 
 
 def get_tag_class(source):

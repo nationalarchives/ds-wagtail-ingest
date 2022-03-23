@@ -47,13 +47,14 @@ def fetch_urls():
             # Fetch Sub Topic/TimePeriod explorer page and find ResultsPage links
             explorer_page_url = f"{BASE_URL}{explorer_index_a.attrib['href']}"
             for results_page_a in fetch_and_find_links(
-                explorer_page_url, "#analytics-collection-highlights a.card-group-secondary-nav__image-link"
+                explorer_page_url,
+                "#analytics-collection-highlights a.card-group-secondary-nav__image-link",
             ):
                 yield f"{BASE_URL}{results_page_a.attrib['href']}"
 
 
 def fetch_page_data(url):
-    slug = url.split('/')[-2]
+    slug = url.split("/")[-2]
 
     page = session.get(url).content
     document = pq(page)

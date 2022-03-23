@@ -7,14 +7,14 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('research', '0001_initial'),
+        ("research", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='researchguidepage',
-            name='body',
-            field=wagtail.core.fields.RichTextField(default=''),
+            model_name="researchguidepage",
+            name="body",
+            field=wagtail.core.fields.RichTextField(default=""),
             preserve_default=False,
         ),
     ]
