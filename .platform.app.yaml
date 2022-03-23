@@ -84,12 +84,12 @@ crons:
   update_index:
     spec: 0 5 * * *
     cmd: python manage.py update_index --chunk_size 5
-  fetch_blog_posts:
+  fetch_blog_pages:
     spec: 0 2 * * *
-    cmd: python manage.py fetch_blog_posts
-  fetch_research_guides:
+    cmd: python manage.py fetch_blog_pages
+  fetch_research_guide_pages:
     spec: 0 2 * * *
-    cmd: python manage.py fetch_research_guides
+    cmd: python manage.py fetch_research_guide_pages
   fetch_insights_pages:
     spec: 0 2 * * *
     cmd: python manage.py fetch_insights_pages
@@ -99,9 +99,9 @@ crons:
   fetch_audio_pages:
     spec: 0 2 * * *
     cmd: python manage.py fetch_audio_pages
-  fetch_learning_resources:
+  fetch_learning_resource_pages:
     spec: 0 2 * * *
-    cmd: python manage.py fetch_learning_resources
+    cmd: python manage.py fetch_learning_resource_pages
   fetch_results_pages:
     spec: 0 2 * * *
     cmd: python manage.py fetch_results_pages
