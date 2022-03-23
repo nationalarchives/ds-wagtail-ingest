@@ -1,17 +1,14 @@
 import django
 
+from django.core.management.base import BaseCommand
+
 import requests
 import requests_cache
 
 from pyquery import PyQuery as pq
 
-from django.core.management.base import BaseCommand
-
 from ....home.models import HomePage
-from ...models import (
-    ExhibitionIndexPage,
-    ExhibitionPage,
-)
+from ...models import ExhibitionIndexPage, ExhibitionPage
 
 DATEIME_FORMAT = "%A %d %B %Y"
 

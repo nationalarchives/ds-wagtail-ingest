@@ -1,18 +1,17 @@
 import re
 
-from django.conf import settings
-from django.utils import timezone
 from datetime import datetime
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 import requests
 
 from pyquery import PyQuery as pq
 
-from django.core.management.base import BaseCommand
-
-from ...models import InsightsPage, InsightsIndexPage
 from ....home.models import HomePage
-
+from ...models import InsightsIndexPage, InsightsPage
 
 session = requests.Session()
 

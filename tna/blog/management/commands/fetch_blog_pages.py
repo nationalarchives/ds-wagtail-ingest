@@ -1,22 +1,17 @@
 import re
 
-from django.utils import timezone
 from datetime import datetime
+
+from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 import requests
 import requests_cache
 
 from pyquery import PyQuery as pq
 
-from django.core.management.base import BaseCommand
-
-from ...models import (
-    BlogPage,
-    CategoryTag,
-    ThemeTag,
-    BlogIndexPage,
-)
 from ....home.models import HomePage
+from ...models import BlogIndexPage, BlogPage, CategoryTag, ThemeTag
 
 DATEIME_FORMAT = "%A %d %B %Y"
 

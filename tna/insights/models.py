@@ -1,9 +1,8 @@
 from django.db import models
 
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.models import Page
 from wagtail.search import index
-
-from wagtail.admin.edit_handlers import FieldPanel
 
 from ..richtext.fields import RichTextField
 

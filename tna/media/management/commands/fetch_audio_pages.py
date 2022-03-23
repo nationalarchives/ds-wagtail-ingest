@@ -1,16 +1,16 @@
-from django.utils import timezone
 from datetime import datetime
+
+from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 import requests
 import requests_cache
 
 from pyquery import PyQuery as pq
 
-from django.core.management.base import BaseCommand
-
-from ....home.models import HomePage
 from ....collections.models import CategoryTag, ThemeTag
-from ...models import AudioPage, AudioIndexPage
+from ....home.models import HomePage
+from ...models import AudioIndexPage, AudioPage
 
 DATEIME_FORMAT = "%A %d %B %Y"
 
