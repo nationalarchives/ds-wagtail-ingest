@@ -1,9 +1,11 @@
+import os
 import re
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
 import requests
+import traceback
 
 from pyquery import PyQuery as pq
 
@@ -12,8 +14,9 @@ from ...models import InsightsIndexPage, InsightsPage
 
 session = requests.Session()
 
-LOGIN_URL = "https://beta.nationalarchives.gov.uk/accounts/login/"
-INSIGHTS_INDEX_PAGE_URL = "https://beta.nationalarchives.gov.uk/insight-pages/"
+BASE_URL = os.getenv("BASE_URL")
+LOGIN_URL = f"{BASE_URL}/accounts/login/"
+INSIGHTS_INDEX_PAGE_URL = f"{BASE_URL}/insight-pages/"
 
 
 def login():
@@ -36,7 +39,7 @@ def fetch_urls():
     document = pq(page)
 
     for a in document.find("a.card-group-secondary-nav__image-link"):
-        yield f'https://beta.nationalarchives.gov.uk{a.attrib["href"]}'
+        yield f'{BASE_URL}{a.attrib["href"]}'
 
 
 def fetch_page_data(url):
@@ -55,6 +58,10 @@ def fetch_page_data(url):
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         login()
+        num_urls_created = 0
+        num_urls_updated = 0
+        num_urls_errored = 0
+        num_urls_fetched = 0
 
         home_page = HomePage.objects.get()
 
@@ -65,19 +72,30 @@ class Command(BaseCommand):
 
         for url in fetch_urls():
             print(f"fetching {url}")
-
-            page_data = fetch_page_data(url)
-
+            num_urls_fetched += 1
             try:
-                insights_page = InsightsPage.objects.get(source_url=url)
-            except InsightsPage.DoesNotExist:
-                insights_page = InsightsPage(source_url=url)
+                page_data = fetch_page_data(url)
 
-            insights_page.slug = page_data["slug"]
-            insights_page.title = page_data["title"]
-            insights_page.body = page_data["body"]
+                try:
+                    insights_page = InsightsPage.objects.get(source_url=url)
+                except InsightsPage.DoesNotExist:
+                    insights_page = InsightsPage(source_url=url)
 
-            if not insights_page.id:
-                insights_index_page.add_child(instance=insights_page)
-            else:
-                insights_page.save()
+                insights_page.slug = page_data["slug"]
+                insights_page.title = page_data["title"]
+                insights_page.body = page_data["body"]
+
+                if not insights_page.id:
+                    insights_index_page.add_child(instance=insights_page)
+                    num_urls_created += 1
+                else:
+                    insights_page.save()
+                    num_urls_updated += 1
+            except Exception as e:
+                print(f"Error in fetch_insights_pages traceback= {traceback.format_exc()}")
+                num_urls_errored += 1
+     
+        print(f"Number of urls fetched = {num_urls_fetched}")
+        print(f"Number of urls created = {num_urls_created}")
+        print(f"Number of urls updated = {num_urls_updated}")
+        print(f"Number of urls errored = {num_urls_errored}")
