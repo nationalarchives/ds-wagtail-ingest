@@ -14,9 +14,8 @@ from ...models import InsightsIndexPage, InsightsPage
 
 session = requests.Session()
 
-BASE_URL = os.getenv("BASE_URL")
-LOGIN_URL = f"{BASE_URL}/accounts/login/"
-INSIGHTS_INDEX_PAGE_URL = f"{BASE_URL}/insight-pages/"
+LOGIN_URL = f"{settings.TNA_SCRAPER_BASE_URL}/accounts/login/"
+INSIGHTS_INDEX_PAGE_URL = f"{settings.TNA_SCRAPER_BASE_URL}/insight-pages/"
 
 
 def login():
@@ -39,7 +38,7 @@ def fetch_urls():
     document = pq(page)
 
     for a in document.find("a.card-group-secondary-nav__image-link"):
-        yield f'{BASE_URL}{a.attrib["href"]}'
+        yield f'{settings.TNA_SCRAPER_BASE_URL}{a.attrib["href"]}'
 
 
 def fetch_page_data(url):

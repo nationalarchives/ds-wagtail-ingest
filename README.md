@@ -50,9 +50,9 @@ Email address for `ds-wagtail` user with access to page content.
 
 Password address for `ds-wagtail` user with access to page content.
 
-### `BASE_URL`
+### `TNA_SCRAPER_BASE_URL`
 
-URL of the Etna `ds-wagtail` whose page content will be scrapped.
+URL of the Etna `ds-wagtail` whose page content will be scraped.
 
 ## Commands
 

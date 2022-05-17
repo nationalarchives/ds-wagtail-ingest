@@ -12,9 +12,8 @@ from ...models import ResultsIndexPage, ResultsPage
 
 session = requests.Session()
 
-BASE_URL = os.getenv("BASE_URL")
-LOGIN_URL = f"{BASE_URL}/accounts/login/"
-INDEX_PAGE_URL = f"{BASE_URL}/explore-the-collection/"
+LOGIN_URL = f"{settings.TNA_SCRAPER_BASE_URL}/accounts/login/"
+INDEX_PAGE_URL = f"{settings.TNA_SCRAPER_BASE_URL}/explore-the-collection/"
 
 
 def login():
@@ -40,17 +39,17 @@ def fetch_urls():
     # Fetch ExplorerIndexPage and find links to Topic/TimePeriod ExplorerPage
     for a in fetch_and_find_links(INDEX_PAGE_URL, ".card-group-promo__card-heading a"):
         # Fetch Topic/TimePeriod ExplorerPage and find links to Sub Topic/TimePeriod explorer page
-        url = f"{BASE_URL}{a.attrib['href']}"
+        url = f"{settings.TNA_SCRAPER_BASE_URL}{a.attrib['href']}"
         for explorer_index_a in fetch_and_find_links(
             url, "a.card-group-secondary-nav__image-link"
         ):
             # Fetch Sub Topic/TimePeriod explorer page and find ResultsPage links
-            explorer_page_url = f"{BASE_URL}{explorer_index_a.attrib['href']}"
+            explorer_page_url = f"{settings.TNA_SCRAPER_BASE_URL}{explorer_index_a.attrib['href']}"
             for results_page_a in fetch_and_find_links(
                 explorer_page_url,
                 "#analytics-collection-highlights a.card-group-secondary-nav__image-link",
             ):
-                yield f"{BASE_URL}{results_page_a.attrib['href']}"
+                yield f"{settings.TNA_SCRAPER_BASE_URL}{results_page_a.attrib['href']}"
 
 
 def fetch_page_data(url):

@@ -192,3 +192,6 @@ BASE_URL = "http://example.com"
 # National Archives Scraper Credentials
 TNA_SCRAPER_EMAIL = os.getenv("TNA_SCRAPER_EMAIL")
 TNA_SCRAPER_PASSWORD = os.getenv("TNA_SCRAPER_PASSWORD")
+
+# URL of the Etna `ds-wagtail` whose page content will be scraped
+TNA_SCRAPER_BASE_URL = os.getenv("TNA_SCRAPER_BASE_URL")
