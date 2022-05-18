@@ -63,6 +63,11 @@ class Command(BaseCommand):
 
         home_page = HomePage.objects.get()
 
+        # In order update with latest changes CRUD made by the editor
+        # or, since id for same data may be different accorss environments
+        # Perform full-refresh 
+        InsightsIndexPage.objects.all().delete()
+
         insights_index_page = InsightsIndexPage.objects.first()
         if not insights_index_page:
             insights_index_page = InsightsIndexPage(title="Insights")
