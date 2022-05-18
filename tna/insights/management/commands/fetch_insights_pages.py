@@ -73,7 +73,7 @@ class Command(BaseCommand):
             insights_index_page = InsightsIndexPage(title="Insights")
             home_page.add_child(instance=insights_index_page)
 
-        for url in fetch_urls():
+        for url in set(fetch_urls()):
             print(f"fetching {url}")
             num_urls_fetched += 1
             try:

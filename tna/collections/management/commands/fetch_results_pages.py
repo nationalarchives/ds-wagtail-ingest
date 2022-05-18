@@ -84,7 +84,7 @@ class Command(BaseCommand):
             results_index_page = ResultsIndexPage(title="Highlights")
             home_page.add_child(instance=results_index_page)
 
-        for url in fetch_urls():
+        for url in set(fetch_urls()):
             print(f"Processing {url}")
             num_urls_fetched += 1
             try:
