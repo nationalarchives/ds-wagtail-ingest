@@ -68,7 +68,6 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         login()
         num_urls_created = 0
-        num_urls_updated = 0
         num_urls_errored = 0
         num_urls_fetched = 0
 
@@ -76,7 +75,7 @@ class Command(BaseCommand):
 
         # In order update with latest changes CRUD made by the editor
         # or, since id for same data may be different accorss environments
-        # Perform full-refresh 
+        # Perform full-refresh
         ResultsIndexPage.objects.all().delete()
 
         results_index_page = ResultsIndexPage.objects.first()
@@ -88,29 +87,16 @@ class Command(BaseCommand):
             print(f"Processing {url}")
             num_urls_fetched += 1
             try:
-
                 page_data = fetch_page_data(url)
-
-                try:
-                    results_page = ResultsPage.objects.get(source_url=url)
-                except ResultsPage.DoesNotExist:
-                    results_page = ResultsPage(source_url=url)
-
-                results_page.slug = page_data["slug"]
-                results_page.title = page_data["title"]
-                results_page.body = page_data["body"]
-
-                if not results_page.id:
-                    results_index_page.add_child(instance=results_page)
-                    num_urls_created += 1
-                else:
-                    results_page.save()
-                    num_urls_updated += 1
+                results_index_page.add_child(instance=ResultsPage(
+                    title=page_data["title"],
+                    body=page_data["body"],
+                ))
+                num_urls_created += 1
             except Exception:
                 print(f"Error in fetch_results_pages traceback= {traceback.format_exc()}")
                 num_urls_errored += 1
-     
+
         print(f"Number of urls fetched = {num_urls_fetched}")
         print(f"Number of urls created = {num_urls_created}")
-        print(f"Number of urls updated = {num_urls_updated}")
         print(f"Number of urls errored = {num_urls_errored}")
