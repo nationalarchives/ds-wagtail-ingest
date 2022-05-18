@@ -2,6 +2,7 @@ import re
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.db import transaction
 
 import requests
 import traceback
@@ -77,11 +78,12 @@ class Command(BaseCommand):
             num_urls_fetched += 1
             try:
                 page_data = fetch_page_data(url)
-                insights_index_page.add_child(instance=InsightsPage(
-                    source_url=url,
-                    title=page_data["title"],
-                    body=page_data["body"],
-                ))
+                with transaction.atomic():
+                    insights_index_page.add_child(instance=InsightsPage(
+                        source_url=url,
+                        title=page_data["title"],
+                        body=page_data["body"],
+                    ))
                 num_urls_created += 1
             except Exception as e:
                 print(f"Error in fetch_insights_pages traceback= {traceback.format_exc()}")
