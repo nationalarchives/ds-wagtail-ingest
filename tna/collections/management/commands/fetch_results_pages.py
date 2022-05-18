@@ -91,6 +91,7 @@ class Command(BaseCommand):
                 page_data = fetch_page_data(url)
                 with transaction.atomic():
                     results_index_page.add_child(instance=ResultsPage(
+                        source_url=url,
                         title=page_data["title"],
                         body=page_data["body"],
                     ))
