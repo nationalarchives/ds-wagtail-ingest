@@ -88,6 +88,12 @@ class Command(BaseCommand):
             except Exception as e:
                 print(f"Error in fetch_insights_pages traceback= {traceback.format_exc()}")
                 num_urls_errored += 1
+                # AttributeError: 'NoneType' object has no attribute '_inc_path'
+                # numchild field value on the parent is updated in memory, 
+                # even though the change might not be committed to the db.
+                # so refresh from db
+                print(f"Refreshing from db insights_index_page")
+                insights_index_page.refresh_from_db(fields=['numchild'])
 
         print(f"Number of urls fetched = {num_urls_fetched}")
         print(f"Number of urls created = {num_urls_created}")
