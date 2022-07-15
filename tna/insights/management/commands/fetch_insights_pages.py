@@ -15,7 +15,7 @@ from ...models import InsightsIndexPage, InsightsPage
 session = requests.Session()
 
 LOGIN_URL = f"{settings.TNA_SCRAPER_BASE_URL}/accounts/login/"
-INSIGHTS_INDEX_PAGE_URL = f"{settings.TNA_SCRAPER_BASE_URL}/insight-pages/"
+INSIGHTS_INDEX_PAGE_URL = f"{settings.TNA_SCRAPER_BASE_URL}/stories/"
 
 
 def login():
